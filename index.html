@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html class="h-100">
+<head>
+    <meta charset="utf-8" content="text/html" http-equiv="Content-Type"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Seguiment del COVID19</title>
+    <meta content="Activitat DAW-M6" name="description"/>
+    <meta content="Anton Dalmau" name="author">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="covid.js"></script>
+    <script>
+
+    </script>
+    <style>
+        #suggestions {
+            display: block;
+            position: absolute;
+            z-index: 90;
+            padding: 5px;
+            margin-top: 1px;
+            cursor: pointer;
+        }
+
+        #suggestions div {
+            padding: 10px;
+        }
+
+        #suggestions div:hover {
+            background-color: #86ECFC;
+        }
+
+        .elem-mid {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .loading {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.4);
+            width: 100%;
+            height: 100%;
+            z-index: 99;
+            text-align: center;
+            font-size: 10vw;
+        }
+
+        .ocultar {
+            display: none;
+        }
+
+    </style>
+</head>
+
+<body class="h-100 d-flex flex-column">
+<div class="loading">
+    <div class="elem-mid"><i class="fas fa-sync-alt fa-spin text-primary"></i></div>
+</div>
+<div class="container flex-shrink-0 my-5">
+    <h1>Estadístiques del COVID19 per
+        <span id="country_name">països</span>
+    </h1>
+    <h2 class="lead">Escriu el nom del país per veure la seva afectació</h2>
+
+    <div class="row py-3">
+        <div class="col-lg-12" id="content">
+            <div class="form-inline">
+                <div class="input-group input-group-sm">
+                    <input autocomplete="off" class="search_query form-control" id="key" name="key"
+                           placeholder="Cercar..."
+                           type="text">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-flat disabled"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </div>
+            <div class="card" id="suggestions" style="display: none;"></div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card mb-3">
+                <div class="row no-gutters h-100">
+                    <div class="col-md-4 bg-primary text-white text-center">
+                        <div class="card-body">
+                            <h1 class="card-text"><i class="far fa-calendar-alt"></i></h1>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body elem-mid">
+                            <h4 class="card-text text-center" id="current_date">N/A</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card mb-3">
+                <div class="row no-gutters h-100">
+                    <div class="col-md-4 bg-warning text-white text-center">
+                        <div class="card-body elem-mid">
+                            <h1 class="card-text"><i class="fas fa-bug"></i></h1>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body elem-mid">
+                            <h4 class="card-text text-center" id="current_infected">N/A</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card mb-3">
+                <div class="row no-gutters h-100">
+                    <div class="col-md-4 bg-danger text-white text-center">
+                        <div class="card-body elem-mid">
+                            <h1 class="card-text"><i class="fas fa-skull-crossbones"></i></h1>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body elem-mid">
+                            <h4 class="card-text text-center" id="current_deaths">N/A</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card mb-3">
+                <div class="row no-gutters h-100">
+                    <div class="col-md-4 bg-success text-white text-center">
+                        <div class="card-body elem-mid">
+                            <h1 class="card-text"><i class="fas fa-heartbeat"></i></h1>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body elem-mid">
+                            <h4 class="card-text text-center" id="current_recovered">N/A</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5" id="old_days">
+        <!--<div class="col-xl-2 col-lg-4 col-md-6">
+            <div class="card mb-3">
+                <div class="row no-gutters h-100">
+                    <div class="col-12">
+                        <div class="card-body">
+                            <div><i class="fas fa-calendar-alt text-primary"></i> 00/00/000</div>
+                            <div><i class="fas fa-bug text-warning"></i> 0</div>
+                            <div><i class="fas fa-skull-crossbones text-danger"></i> 0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+</div>
+
+<footer class="footer bg-light mt-auto py-3">
+    <div class="container text-center">
+        <span class="text-muted">
+            <a href="https://www.insbaixcamp.org">&copy; Institut Baix Camp</a>
+        </span>
+    </div>
+</footer>
+
+</body>
+</html>
